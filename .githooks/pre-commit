@@ -1,0 +1,40 @@
+#!/bin/sh
+# Локальный CI Task Pilot: коммит проходит, только если pnpm check зеленый (проверка типов, тесты, сборка
+# интерфейса) и смоук интерфейса pnpm smoke не нашел ошибок на главных экранах. Проверяется рабочая папка целиком,
+# вместе с правками, которые в коммит не входят. В крайнем случае проверку пропускает git commit --no-verify.
+
+# Git передает хуку свои переменные (GIT_INDEX_FILE, GIT_AUTHOR_*, GIT_CONFIG_PARAMETERS и другие): с ними git в
+# тестах с временными репозиториями работал бы с индексом этого репозитория. Проверка идет без них.
+for v in $(env | sed -n 's/^\(GIT_[A-Za-z0-9_]*\)=.*/\1/p'); do
+  unset "$v"
+done
+
+# Git из IDE запускает хук с коротким PATH, где может не быть Homebrew с node и pnpm.
+PATH="$PATH:/opt/homebrew/bin:/usr/local/bin"
+export PATH
+
+if ! command -v pnpm >/dev/null 2>&1; then
+  echo "pre-commit: pnpm не найден, проверка не запущена и коммит отменен (пропустить: git commit --no-verify)" >&2
+  exit 1
+fi
+
+echo "pre-commit: pnpm check (типы, тесты, сборка интерфейса)" >&2
+LOG=$(mktemp "${TMPDIR:-/tmp}/task-pilot-check.XXXXXX")
+if ! pnpm check >"$LOG" 2>&1; then
+  echo "pre-commit: pnpm check не прошел, коммит отменен. Конец вывода:" >&2
+  tail -n 40 "$LOG" >&2
+  echo "pre-commit: полный вывод в $LOG" >&2
+  exit 1
+fi
+grep -E "Tests +[0-9]" "$LOG" | tail -n 1 >&2
+
+echo "pre-commit: pnpm smoke (главные экраны интерфейса в headless Chrome)" >&2
+if pnpm smoke >"$LOG" 2>&1; then
+  tail -n 1 "$LOG" >&2
+  rm -f "$LOG"
+  exit 0
+fi
+echo "pre-commit: смоук интерфейса не прошел, коммит отменен. Конец вывода:" >&2
+tail -n 40 "$LOG" >&2
+echo "pre-commit: полный вывод в $LOG" >&2
+exit 1

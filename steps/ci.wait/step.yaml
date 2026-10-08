@@ -1,0 +1,12 @@
+id: ci.wait
+title: Сборка ветки
+hint: "Ждет сборку коммита ветки в Bamboo; если она упала, агент разбирает лог и чинит код в рабочей папке"
+phase: ci
+kind: hybrid
+requires: [issue]
+provides: [build]
+gate: none
+sideEffects: true
+agent:
+  model: opus
+  maxBudgetUsd: 8

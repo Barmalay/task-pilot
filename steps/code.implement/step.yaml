@@ -1,0 +1,12 @@
+id: code.implement
+title: Реализация
+hint: "Агент пишет код и тесты по утвержденному плану и доводит сборку под JDK 21 до зеленой"
+phase: code
+kind: agent
+requires: [issue, worktree]
+provides: [changes]
+gate: none
+sideEffects: true
+agent:
+  model: opus
+  maxBudgetUsd: 25

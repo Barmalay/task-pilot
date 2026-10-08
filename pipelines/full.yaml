@@ -1,0 +1,27 @@
+id: full
+title: Полный цикл
+hint: Обычная задача от взятия в работу до мержа и вехи merged доски
+steps:
+  - jira.start
+  - git.prepare
+  - task.analyze
+  - code.implement
+  - code.verify
+  - code.publish
+  - ci.wait
+  - ansible.config
+  - deploy.stand
+  - qa.stand
+  - qa.fix
+  - qa.publish
+  - pr.address-review
+  - monitor.dashboard
+  - wiki.update
+  - task.finish
+  - pilot.retro
+off:
+  - ansible.config
+  - monitor.dashboard
+params:
+  qa.publish:
+    moveTo: none

@@ -1,0 +1,15 @@
+# Конфиг деплоя сервисов контура core (DEVOPS/k8s-ansible на git.example.com). Ветку задачи шаг "Конфиг деплоя"
+# заводит сам, с именем ветки задачи в репозитории сервиса, а деплой контура берет ее только через форму Customize
+# Deploy (deploy.ansibleBranch контура core). Заметки ниже получает агент, который пишет правку конфига.
+id: k8s-ansible-core
+title: k8s-ansible (core)
+contour: core
+path: ~/src/k8s-ansible
+worktreesDir: ~/src/.worktrees
+bitbucket:
+  project: DEVOPS
+  repo: k8s-ansible
+notes:
+  - "Настройки сервиса лежат в group_vars/<сервис>/: базовый файл (имя сервиса через подчеркивания, например my_service) в config_secret_data.data связывает переменную окружения сервиса с переменной ansible, а файлы _stable, _testing, _production и _reserve задают значения переменных ansible."
+  - "У mobile файл mobile_stable - ссылка на mobile_testing: правка Stable меняет и все Testing-* и Staging."
+  - "Секреты в файле окружения записаны так же, как соседние секреты того же файла: значением или ссылкой {{ ... }}."

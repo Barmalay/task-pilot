@@ -1,0 +1,18 @@
+id: qa.publish
+title: Итоги в Jira
+hint: "Одно подтверждение на все: комментарий с таблицей AC и миниатюрами, вложения без дублей и перевод задачи по доске в тестирование (веха testing)"
+phase: qa
+kind: hybrid
+requires: [issue, qaReport]
+provides: [qaComment, status]
+gate: publish
+sideEffects: true
+refresh: [artifacts]
+params:
+  moveTo:
+    type: jiraStatus
+    label: Куда перевести задачу
+    milestone: testing
+agent:
+  model: sonnet
+  maxBudgetUsd: 2

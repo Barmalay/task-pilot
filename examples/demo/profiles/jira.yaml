@@ -1,0 +1,17 @@
+# Доска учебной команды: подменная Jira демо переводит задачи по этому пути. Путь и вехи свои, не как у досок
+# настоящих команд: шаги знают только ключи вех, а статусы берут отсюда.
+baseUrl: https://jira.demo.invalid
+myIssuesJql: assignee = currentUser() ORDER BY updated DESC
+path:
+  - { from: Open, id: 11, name: Взять в работу, to: In Progress }
+  - { from: In Progress, id: 21, name: На ревью, to: Review }
+  - { from: Review, id: 31, name: В тестирование, to: Testing }
+  - { from: Testing, id: 41, name: Смержено, to: Done }
+offPath: [Closed]
+# Закрытая задача закончена, как и дошедшая до вехи merged: наблюдатель за ней больше не следит.
+finished: [Closed]
+milestones:
+  inProgress: In Progress
+  review: Review
+  testing: Testing
+  merged: Done

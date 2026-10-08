@@ -1,0 +1,10 @@
+# Логи прода компании для панели мониторинга: кластер es-prod. Сервисы и задачи панели задает profiles/monitor.yaml
+# пакета команды, его ключи ложатся поверх этих.
+source:
+  id: es-prod
+  # Адрес кластера ES_URL и ключ только на чтение ES_API_KEY берутся из env этого MCP-сервера в ~/.claude.json:
+  # MCP-инструменты с таким ключом отвечают 403, а _search и _msearch работают.
+  mcp: elasticsearch
+  kibana: https://kibana.example.com
+# Дни и часы воронок фич считаются по московскому времени, как в отчетах и Kibana команд.
+timeZone: Europe/Moscow

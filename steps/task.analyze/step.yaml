@@ -1,0 +1,12 @@
+id: task.analyze
+title: Анализ и план
+hint: "Агент читает задачу, код и вики и пишет план с вопросами; дальше только после утверждения плана"
+phase: task
+kind: agent
+requires: [issue, worktree]
+provides: [plan]
+gate: before
+sideEffects: true
+agent:
+  model: opus
+  maxBudgetUsd: 8

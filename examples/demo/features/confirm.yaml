@@ -1,0 +1,36 @@
+# Учебная фича калькулятора: подтверждение крупной операции. Строки сочиняет apps/server/src/demo/features.ts, формат
+# профиля - в docs/monitor.md.
+id: confirm
+title: Подтверждение операции
+short: Подтверждение
+since: '2026-09-01'
+service: calculator
+intro: >-
+  Четверть операций калькулятора просит подтверждение формой. Тестовые пользователи идут без формы и пройденными не
+  считаются, а после подтверждения результат уходит в канал или операцию отклоняет лимит.
+# Сессия операции - state из текста строки калькулятора.
+session: 'state ?= ?([A-Za-z0-9_\-]{6,})'
+baseline: { label: Операций принято, any: [Операция принята] }
+stages:
+  - key: entered
+    label: Нужно подтверждение
+    any: [нужно подтверждение]
+    role: entry
+    detail: { regex: 'сумма=(\d+)', label: сумма }
+  - { key: shown, label: Увидели форму, any: [показана форма подтверждения], role: shown }
+  - { key: passed, label: Подтвердили, any: [Подтверждение для state], all: [принято], role: success }
+  - { key: test, label: 'Тестовый пользователь, без формы', any: [тестовый пользователь], role: skip }
+errors:
+  - { key: unavailable, label: Сервис подтверждения недоступен, any: [сервис подтверждения недоступен] }
+downstream:
+  from: passed
+  by: trace
+  title: Что дальше после подтверждения
+  outcomes:
+    - { key: sent, label: Результат отправлен, any: [Результат отправлен], detail: "в канал '([^']+)'", tone: good }
+    - { key: limit, label: 'Отказ: лимит операций', any: [Превышен лимит операций], tone: bad }
+  otherLabel: Прочее
+# Вход - callback demo.invalid/api/result с тем же state после подтверждения.
+login: { from: passed, label: Получили результат, any: [demo.invalid/api/result], session: '"state":"([^"]+)"' }
+timing: { from: shown, to: passed, label: От показа формы до подтверждения }
+automation: { stage: shown, threshold: 6 }

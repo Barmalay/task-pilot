@@ -1,0 +1,27 @@
+# Дашборд учебной задачи DEMO-2: формат описан в docs/dashboards.md. Логи прода в демо подменные.
+id: demo-2-division
+title: Калькулятор - деление
+description: >-
+  Сколько делений считает калькулятор, сколько из них на ноль и свежие строки.
+task: DEMO-2
+service: calculator
+headline: [divide, by-zero]
+panels:
+  - id: divide
+    title: Деления
+    hint: 'Строка "Calculator divide: a=..., b=..."'
+    type: timeseries
+    match: ['Calculator divide']
+  - id: by-zero
+    title: Деления на ноль
+    type: stat
+    match: ['Calculator divide by zero']
+  - id: lines
+    title: Свежие строки калькулятора
+    type: lines
+    match: ['Calculator divide']
+alerts:
+  - id: no-divide
+    panel: divide
+    when: zero
+    window: 15m

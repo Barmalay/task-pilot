@@ -1,0 +1,8 @@
+id: test-stand
+title: Тест на стенде
+hint: Ветка готова, нужен прогон и артефакты на выбранном стенде
+steps:
+  - ci.wait
+  - deploy.stand
+  - qa.stand
+  - qa.publish

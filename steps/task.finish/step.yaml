@@ -1,0 +1,14 @@
+id: task.finish
+title: Мерж и доска
+hint: "Публикует готовые ответы на замечания ревьюеров, ждет мерж PR и одним подтверждением проводит задачу по доске до вехи merged"
+phase: finish
+kind: code
+requires: [issue]
+provides: [merged, status, prReview]
+gate: before
+sideEffects: true
+params:
+  moveTo:
+    type: jiraStatus
+    label: Куда перевести задачу
+    milestone: merged

@@ -1,0 +1,13 @@
+# Учебный контур: git и Bamboo в демо подменные, эти адреса никуда не ведут.
+id: demo
+title: демо
+git: https://demo.invalid
+bamboo: https://demo.invalid
+mcp:
+  bitbucket: demo
+connected: true
+# Схема тегов образов и релизов подменного Bamboo: та же, что у DEMO_BUILDS в apps/server/src/demo/ci.ts.
+builds:
+  branchTag: 1.0.{build}-{branch}
+  masterTag: 1.0.{build}-master
+  masterRelease: ^release-\d+$

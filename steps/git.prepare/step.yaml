@@ -1,0 +1,9 @@
+id: git.prepare
+title: Ветка
+hint: "Готовит ветку задачи: fetch, отдельный worktree, проверка отставания от master и ребейз до коммитов"
+phase: code
+kind: code
+requires: [issue]
+provides: [branch, worktree, rebased]
+gate: before
+sideEffects: true

@@ -1,0 +1,16 @@
+id: gate
+title: gate
+contour: cloud
+default: true
+match:
+  components: [gate]
+  labels: [repo:CLOUD/gate]
+  side: backend
+path: ~/src/gate
+worktreesDir: ~/src/.worktrees
+build:
+  command: mvn -o package
+commitPaths: [src/**, pom.xml]
+bitbucket: { project: CLOUD, repo: gate }
+bamboo: { plan: BUILDS-GATE, deploymentProject: 24608774 }
+deployRepo: k8s-ansible-cloud

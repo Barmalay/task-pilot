@@ -1,0 +1,10 @@
+id: code-pr
+title: Код и PR
+hint: Довести задачу до ревью
+steps:
+  - jira.start
+  - git.prepare
+  - task.analyze
+  - code.implement
+  - code.verify
+  - code.publish

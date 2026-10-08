@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+/* Темная тема по классу dark на html: его ставит выбор темы в шапке, а до загрузки React - скрипт в index.html. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* Панель профиля выезжает справа, выпадающие панели шапки проявляются: коротко, без отвлечения. */
+  --animate-drawer-in: drawer-in 160ms ease-out;
+  --animate-pop-in: pop-in 120ms ease-out;
+
+  @keyframes drawer-in {
+    from {
+      transform: translateX(100%);
+    }
+  }
+  @keyframes pop-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100;
+}
+
+/* Свернутая пауза на ленте времени прогона: штриховка поперек всех строк. */
+.gantt-break {
+  background: repeating-linear-gradient(135deg, var(--color-slate-300) 0 3px, transparent 3px 6px);
+}
+.dark .gantt-break {
+  background: repeating-linear-gradient(135deg, var(--color-slate-600) 0 3px, transparent 3px 6px);
+}
+
+/* Отрисованный markdown (компонент Markdown): плотная типографика для планов, описаний PR и страниц вики. Цвет текста от родителя. */
+.md {
+  @apply wrap-anywhere leading-relaxed;
+}
+.md > :first-child {
+  @apply mt-0;
+}
+.md > :last-child {
+  @apply mb-0;
+}
+.md h1 {
+  @apply mt-4 mb-2 text-lg font-semibold;
+}
+.md h2 {
+  @apply mt-4 mb-2 text-base font-semibold;
+}
+.md h3,
+.md h4,
+.md h5,
+.md h6 {
+  @apply mt-3 mb-1.5 font-semibold;
+}
+.md p {
+  @apply my-2;
+}
+.md ul {
+  @apply my-2 list-disc space-y-1 pl-5;
+}
+.md ol {
+  @apply my-2 list-decimal space-y-1 pl-5;
+}
+.md li > ul,
+.md li > ol {
+  @apply my-1;
+}
+.md a {
+  @apply text-blue-700 underline underline-offset-2 dark:text-blue-400;
+}
+.md strong {
+  @apply font-semibold;
+}
+.md code {
+  @apply rounded bg-slate-100 px-1 py-0.5 font-mono text-[0.85em] dark:bg-slate-800;
+}
+.md pre {
+  @apply my-2 overflow-x-auto rounded-lg bg-slate-100 p-3 text-xs dark:bg-slate-800;
+}
+.md pre code {
+  @apply bg-transparent p-0 text-[1em];
+}
+.md blockquote {
+  @apply my-2 border-l-2 border-slate-300 pl-3 text-slate-600 dark:border-slate-600 dark:text-slate-300;
+}
+.md hr {
+  @apply my-3 border-slate-200 dark:border-slate-700;
+}
+.md table {
+  @apply my-2 block w-full overflow-x-auto border-collapse text-xs;
+}
+/* В ячейках слова и код не рвутся посреди: иначе узкие колонки режут значения по буквам, а широкую таблицу прокручивают. */
+.md th,
+.md td {
+  @apply border border-slate-200 px-2 py-1 text-left align-top dark:border-slate-700;
+  overflow-wrap: normal;
+}
+.md td code,
+.md th code {
+  @apply whitespace-nowrap;
+}
+.md th {
+  @apply bg-slate-50 font-medium dark:bg-slate-800;
+}
+.md input[type='checkbox'] {
+  @apply mr-1 align-middle;
+}
+
+/*
+ * Цвета графиков панели мониторинга: категориальная палитра в фиксированном порядке (проверена валидатором dataviz на
+ * фонах карточек: белом и slate-900), тонкая сетка и статусы алертов. Статусы идут только вместе с иконкой и подписью.
+ */
+:root {
+  --viz-series-1: #2a78d6;
+  --viz-series-2: #eb6834;
+  --viz-series-3: #1baf7a;
+  --viz-series-4: #eda100;
+  --viz-series-5: #e87ba4;
+  --viz-series-6: #008300;
+  --viz-series-7: #4a3aa7;
+  --viz-series-8: #e34948;
+  --viz-surface: #ffffff;
+  --viz-grid: #e2e8f0;
+  --viz-axis: #cbd5e1;
+  --viz-good: #0ca30c;
+  --viz-warning: #fab219;
+  --viz-critical: #d03b3b;
+}
+
+:root.dark {
+  --viz-series-1: #3987e5;
+  --viz-series-2: #d95926;
+  --viz-series-3: #199e70;
+  --viz-series-4: #c98500;
+  --viz-series-5: #d55181;
+  --viz-series-6: #008300;
+  --viz-series-7: #9085e9;
+  --viz-series-8: #e66767;
+  --viz-surface: #0f172a;
+  --viz-grid: #1e293b;
+  --viz-axis: #334155;
+}

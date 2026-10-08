@@ -1,0 +1,11 @@
+id: testing-1
+title: testing-1
+contour: cloud
+url: https://gate-1.example.org
+realm: test-realm
+health: /auth/realms/{realm}/.well-known/openid-configuration
+namespace: testing-cloud-1
+bambooEnv: Testing-Cloud-1
+bambooEnvId: 24674390
+logs: kibana-cloud
+deployable: true

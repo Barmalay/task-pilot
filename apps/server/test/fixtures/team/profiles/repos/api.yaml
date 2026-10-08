@@ -1,0 +1,15 @@
+id: api
+title: api
+contour: core
+match:
+  components: [api]
+path: ~/src/api
+worktreesDir: ~/src/.worktrees
+health: /health/readiness
+deployRepo: k8s-ansible-core
+qa:
+  keycloak: { stand: stable, serviceStand: core-stable }
+build:
+  command: mvn -o -DbambooBuildNumber=1 -DbambooBranchSequence=1 package
+bitbucket: { project: SF, repo: api }
+bamboo: { plan: BUILDS-API, deploymentProject: 620658716 }

@@ -1,0 +1,12 @@
+id: pilot.new-step
+title: Новый шаг
+hint: "Мастер: Claude пишет шаг Task Pilot по описанию (манифест, реализацию, промпт и тест), Task Pilot проверяет типы, тесты и загрузку каталога на копии; шаг попадает в каталог после подтверждения, коммит по команде владельца"
+phase: meta
+kind: hybrid
+requires: [stepRequest]
+provides: [newStep]
+gate: before
+sideEffects: true
+agent:
+  model: opus
+  maxBudgetUsd: 10

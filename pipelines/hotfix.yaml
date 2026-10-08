@@ -1,0 +1,11 @@
+id: hotfix
+title: Хотфикс
+hint: Срочное исправление без анализа и QA-артефактов
+steps:
+  - jira.start
+  - git.prepare
+  - code.implement
+  - code.verify
+  - code.publish
+  - ci.wait
+  - deploy.stand

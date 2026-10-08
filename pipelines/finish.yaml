@@ -1,0 +1,16 @@
+id: finish
+title: Завершение
+hint: После ревью ответить на замечания, дождаться мержа и довести задачу по доске до вехи merged
+steps:
+  - git.prepare
+  - code.verify
+  - code.publish
+  - ci.wait
+  - pr.address-review
+  - task.finish
+  - wiki.update
+# Проверку, коммит и сборку включает петля ответа на ревью, если по замечаниям меняется код.
+off:
+  - code.verify
+  - code.publish
+  - ci.wait

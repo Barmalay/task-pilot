@@ -1,0 +1,22 @@
+# Учебный калькулятор на Java 21. Демо создает его заново при каждом запуске во временной папке и само подставляет
+# path и worktreesDir; здесь они только для того, чтобы профиль был полным.
+id: demo-calculator
+title: demo-calculator (демо)
+contour: demo
+default: true
+# Задачи демо с компонентом calculator: репозиторий определяется по задаче, как у настоящих.
+match:
+  components: [calculator]
+path: /demo/calculator
+worktreesDir: /demo/worktrees
+build:
+  command: mvn -o -q test
+commitPaths:
+  - src/**
+  - pom.xml
+bitbucket:
+  project: DEMO
+  repo: calculator
+bamboo:
+  plan: DEMO-CALC
+  deploymentProject: 1

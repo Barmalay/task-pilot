@@ -1,0 +1,57 @@
+# Путь одной операции учебной команды: калькулятор, шлюз и аудит связаны идентификаторами операции. Строки сочиняет
+# apps/server/src/demo/features.ts, формат профиля - в docs/monitor.md.
+title: Путь одной операции
+intro: >-
+  Операция калькулятора от приема до результата: подтверждение формой, код из шлюза, действия на странице и запись в
+  журнал аудита. Телефон и код видны только на этом экране.
+window: 2h
+margin: 15m
+services:
+  - { service: calculator, traces: true }
+  - { service: gateway, fields: [{ field: page, label: страница }] }
+  - { service: audit }
+ids:
+  - key: state
+    label: state
+    patterns: ['state ?= ?([A-Za-z0-9_\-]{20,64})', '"state":"([A-Za-z0-9_\-]{20,64})"']
+  - key: correlation
+    label: correlationId
+    patterns: ["correlation ?[iI]d ?[=:]? ?'?([0-9a-f-]{36})", '"correlationId":"([0-9a-f-]{36})"']
+  - { key: flow, label: flowState, patterns: ['flowState=([0-9a-f-]{36})'], fields: { audit: flowState.keyword } }
+  - { key: client, label: clientId, patterns: ['clientId=([0-9a-f-]{36})'], scope: person }
+  - key: phone
+    label: телефон
+    patterns: ['номер (7\d{10})', '"phone":"(7\d{10})"']
+    scope: person
+    sensitive: true
+    normalize: phone
+  - { key: code, label: код, patterns: ['код подтверждения: (\d{4})'], scope: detail, sensitive: true }
+events:
+  - { key: accepted, label: Операция принята, kind: step, services: [calculator], any: [Операция принята], detail: 'канал = (\w+)', milestone: true }
+  - { key: needs_confirm, label: Нужно подтверждение, kind: step, services: [calculator], any: [нужно подтверждение], detail: 'сумма=(\d+)' }
+  - { key: test_user, label: 'Тестовый пользователь, без подтверждения', kind: step, services: [calculator], any: [тестовый пользователь] }
+  - { key: to_gateway, label: Передана в шлюз, kind: step, services: [calculator], any: [Операция передана в шлюз] }
+  - { key: request, label: Запрос в шлюз, kind: info, services: [calculator], any: ['Outgoing Request:'], detail: '(?:POST|GET) (\S+)' }
+  - { key: gateway_in, label: Шлюз принял операцию, kind: step, services: [gateway], any: [Операция передана дальше] }
+  - { key: code_sent, label: Код отправлен, kind: step, services: [gateway], any: [Код подтверждения отправлен], milestone: true }
+  - { key: client, label: Действие на странице, kind: action, services: [gateway], any: [channel=client], detail: 'eventName=(\w+)' }
+  - { key: form, label: Показана форма подтверждения, kind: step, services: [calculator], any: [показана форма подтверждения], milestone: true }
+  - { key: unavailable, label: Сервис подтверждения недоступен, kind: error, services: [calculator], any: [сервис подтверждения недоступен], search: true }
+  - { key: code, label: Введен код, kind: action, services: [calculator], any: [Введенный пользователем код подтверждения], milestone: true }
+  - { key: wrong_code, label: Неверный код, kind: error, services: [calculator], any: [Неверный код подтверждения], search: true }
+  - { key: confirmed, label: Подтверждено, kind: step, services: [calculator], any: [Подтверждение для state], all: [принято], milestone: true }
+  - { key: journal, label: Запись в журнал аудита, kind: step, services: [audit], any: [Операция записана в журнал] }
+  - key: result
+    label: Результат отправлен
+    kind: outcome
+    services: [calculator]
+    any: [Результат отправлен]
+    provider: "в канал '([^']+)'"
+    outcome: success
+    milestone: true
+    search: true
+  - { key: limit, label: 'Отказ: лимит операций', kind: error, services: [calculator], any: [Превышен лимит операций], outcome: failure, search: true }
+  - { key: callback, label: Callback с результатом, kind: step, services: [calculator], any: [demo.invalid/api/result] }
+providers:
+  - { key: web, label: Веб, values: [web] }
+  - { key: push, label: Пуш, values: [push] }

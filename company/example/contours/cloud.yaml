@@ -1,0 +1,20 @@
+id: cloud
+title: cloud
+git: https://git.cloud.example.com
+bamboo: https://bamboo.cloud.example.com
+mcp:
+  bitbucket: bitbucket
+  bamboo: bamboo-cloud
+connected: true
+# Имена прода сверх слова prod, которое запрещено всегда: резерв и staging перед продом.
+prodLike: reserve|staging
+# Стенд по умолчанию для прогонов: Stable.
+defaultStand: ^stable
+# Теги образов и релизы Bamboo: сборка ветки плана 1.0.<сборка>-<номер ветки плана>, сборка самого плана
+# 1.0.<сборка>-master, релиз основной ветки release-<номер>.
+builds:
+  branchTag: 1.0.{build}-{branch}
+  masterTag: 1.0.{build}-master
+  masterRelease: ^release-\d+$
+# Production-Cloud: токен технически разрешает туда деплой, инструмент - никогда.
+forbiddenBambooEnvIds: [24674389]

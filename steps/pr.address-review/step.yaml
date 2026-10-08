@@ -1,0 +1,18 @@
+id: pr.address-review
+title: Ответ на ревью
+hint: "Замечания ревьюеров без ответа: агент правит код и готовит ответ на каждое; исправления проходят проверку, коммит и сборку, ответы публикует шаг \"Мерж и доска\" после пуша"
+phase: finish
+kind: agent
+requires: [issue, worktree]
+provides: [prReview]
+gate: none
+sideEffects: true
+agent:
+  model: opus
+  maxBudgetUsd: 10
+loop:
+  restart: [code.verify, code.publish, ci.wait]
+  max: 3
+  title: по ревью
+# Новые замечания в PR наблюдатель находит сам и запускает ответ на них заново.
+trigger: { event: pr.review, auto: true }

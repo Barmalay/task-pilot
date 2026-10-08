@@ -1,0 +1,16 @@
+id: rework
+title: Доработка
+hint: Задачу вернули или поменялась постановка
+steps:
+  - task.rework
+  - git.prepare
+  - code.implement
+  - code.verify
+  - code.publish
+  - ci.wait
+  - deploy.stand
+  - qa.stand
+  - qa.fix
+  - qa.publish
+  - pr.address-review
+  - task.finish

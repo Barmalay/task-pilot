@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- Иконка приложения Task Pilot: самолет из шапки интерфейса (lucide plane) и пунктир маршрута по шагам цикла. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4b8bff"/>
+      <stop offset="1" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <radialGradient id="shine" cx="0.28" cy="0.1" r="0.95">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.30"/>
+      <stop offset="0.55" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+    <filter id="lift" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#172554" flood-opacity="0.38"/>
+    </filter>
+  </defs>
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#bg)" filter="url(#shadow)"/>
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#shine)"/>
+  <path d="M210 812 C 262 772, 300 736, 352 690" fill="none" stroke="#ffffff" stroke-opacity="0.8" stroke-width="26" stroke-linecap="round" stroke-dasharray="0.1 56"/>
+  <g filter="url(#lift)">
+    <g transform="translate(290 196) scale(23)">
+      <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" fill="#ffffff" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
+    </g>
+  </g>
+</svg>

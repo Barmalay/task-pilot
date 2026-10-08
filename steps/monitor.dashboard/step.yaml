@@ -1,0 +1,14 @@
+id: monitor.dashboard
+title: Дашборд задачи
+hint: "Агент по коду, плану и AC задачи описывает строки лога, панели и алерты; превью показывает живые цифры с прода, дашборд панели мониторинга сохраняется после подтверждения"
+phase: finish
+kind: hybrid
+requires: [issue]
+provides: [dashboard]
+gate: before
+sideEffects: true
+# Дашборд готовится рядом с цепочкой, пока прогон ждет мерж: агент не пишет в рабочую папку ветки.
+background: true
+agent:
+  model: opus
+  maxBudgetUsd: 5

@@ -1,0 +1,11 @@
+id: stable
+title: stable
+contour: cloud
+url: https://gate-stable.example.org
+realm: test-realm
+health: /auth/realms/{realm}/.well-known/openid-configuration
+namespace: stable-cloud
+bambooEnv: Stable-Cloud
+bambooEnvId: 24674472
+logs: kibana-cloud
+deployable: true

@@ -1,0 +1,18 @@
+id: wiki.update
+title: Вики
+hint: "Агент готовит страницу по задаче скиллом wiki-analysis; превью показывает, какая страница создается или обновляется и что в ней меняется, публикация после подтверждения"
+phase: finish
+kind: hybrid
+requires: [issue]
+provides: [wikiPage]
+gate: publish
+sideEffects: true
+# Страница готовится рядом с цепочкой, пока прогон ждет мерж: агент не пишет в рабочую папку ветки.
+background: true
+params:
+  space:
+    type: text
+    label: Пространство вики для новых страниц, пусто - wiki.space из team.yaml
+agent:
+  model: opus
+  maxBudgetUsd: 8

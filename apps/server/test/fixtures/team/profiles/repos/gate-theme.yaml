@@ -1,0 +1,10 @@
+id: gate-theme
+title: gate-theme
+contour: cloud
+match:
+  components: [gate]
+  side: frontend
+path: ~/src/gate-theme
+worktreesDir: ~/src/.worktrees
+build:
+  command: npm run build

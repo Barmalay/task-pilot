@@ -1,0 +1,13 @@
+# Сервисы команды тестов на панели мониторинга; источник логов прода дает слой компании.
+services:
+  - id: gate
+    title: Шлюз
+    index: cloud-k8s-log-*
+    container: gate
+    fields:
+      message: message
+      level: level
+      logger: loggerName.keyword
+      version: container.image.name.keyword
+      pod: kubernetes.pod.name.keyword
+tasksJql: project = TEAM AND status = Monitoring ORDER BY updated DESC

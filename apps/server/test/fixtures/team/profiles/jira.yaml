@@ -1,0 +1,16 @@
+# Доска команды тестов: адрес Jira и поля дает слой компании.
+myIssuesJql: assignee = currentUser() ORDER BY updated DESC
+board: { id: 7, name: Доска тестов }
+path:
+  - { from: Open, id: 1, name: В работу, to: In Progress }
+  - { from: In Progress, id: 2, name: На ревью, to: Review }
+  - { from: Review, id: 3, name: В тестирование, to: Testing }
+  - { from: Testing, id: 4, name: Смержено, to: Merged }
+after: [Monitoring]
+offPath: [Waiting, Closed]
+finished: [Closed]
+milestones:
+  inProgress: In Progress
+  review: Review
+  testing: Testing
+  merged: Merged

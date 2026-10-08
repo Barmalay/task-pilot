@@ -1,0 +1,85 @@
+# Шаги плана, которые еще не реализованы. Интерфейс показывает их серыми с номером этапа.
+# Реализованный шаг живет в steps/<id>/ и перекрывает запись отсюда, сохраняя номер этапа.
+# Задача (описание, AC, метки, компоненты, спринт) загружается при открытии, отдельного шага для этого нет.
+
+- id: ci.wait
+  title: Сборка ветки
+  hint: "Ждет сборку коммита в Bamboo; если она упала, агент разбирает лог и чинит"
+  phase: ci
+  kind: hybrid
+  stage: 3
+- id: ansible.config
+  title: Конфиг деплоя
+  hint: "Ветка k8s-ansible с именем ветки задачи, правка конфига агентом или патчем, коммит, пуш и PR"
+  phase: deploy
+  kind: hybrid
+  gate: publish
+  stage: 3
+- id: deploy.stand
+  title: Деплой на стенд
+  hint: "Релиз из сборки ветки, деплой на выбранный стенд и проверка выкатки по Kibana; с ansible-веткой через Customize Deploy"
+  phase: deploy
+  kind: code
+  gate: publish
+  stage: 3
+- id: qa.stand
+  title: Тест на стенде
+  hint: "QA-гайд, прогон AC скиллом теста на стенде команды, скриншоты и логи Kibana"
+  phase: qa
+  kind: agent
+  stage: 4
+- id: qa.publish
+  title: Итоги в Jira
+  hint: "Комментарий с таблицей AC и скриншотами и перевод задачи по доске в тестирование"
+  phase: qa
+  kind: hybrid
+  gate: publish
+  stage: 4
+- id: task.finish
+  title: Мерж и доска
+  hint: "Ждет мерж PR и проводит задачу по доске до вехи merged одним подтверждением"
+  phase: finish
+  kind: code
+  gate: before
+  stage: 5
+- id: wiki.update
+  title: Вики
+  hint: "Обновляет страницу в Confluence скиллом wiki-analysis"
+  phase: finish
+  kind: hybrid
+  gate: publish
+  stage: 5
+- id: pilot.retro
+  title: Разбор прогона
+  hint: "Предлагает правки промптов шагов и скиллов по замечаниям владельца"
+  phase: meta
+  kind: agent
+  gate: before
+  stage: 5
+- id: qa.fix
+  title: Доработка по тесту
+  hint: "Чинит код по непройденным AC и повторяет только их"
+  phase: qa
+  kind: agent
+  stage: 4
+- id: pr.address-review
+  title: Ответ на ревью
+  hint: "Правит код по замечаниям в PR и готовит ответы на комментарии"
+  phase: code
+  kind: hybrid
+  gate: publish
+  stage: 5
+- id: task.rework
+  title: Доработка задачи
+  hint: "Показывает изменения постановки и обновляет план"
+  phase: task
+  kind: agent
+  gate: before
+  stage: 5
+- id: monitor.dashboard
+  title: Дашборд задачи
+  hint: "Описывает строки лога, панели и алерты задачи для панели мониторинга"
+  phase: finish
+  kind: hybrid
+  gate: before
+  stage: 6

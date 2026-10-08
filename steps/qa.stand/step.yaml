@@ -1,0 +1,15 @@
+id: qa.stand
+title: Тест на стенде
+hint: "Агент проверяет AC в QA-браузере по скиллу теста на стенде из пакета команды: входами на стенде, а у стендов с адресами сервисов и запросами к их API; QA-гайд, скриншоты и кадры Kibana, для капчи и SMS зовет вас"
+phase: qa
+kind: agent
+requires: [issue]
+provides: [qaReport, failedAc]
+gate: none
+sideEffects: true
+interactive: true
+refresh: [artifacts]
+agent:
+  model: opus
+  maxBudgetUsd: 20
+  browser: true

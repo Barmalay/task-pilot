@@ -1,0 +1,11 @@
+# Сервис без сборки на этой машине: собирает Bamboo.
+id: proxy
+title: proxy
+contour: core
+match:
+  components: [proxy]
+path: ~/src/proxy
+worktreesDir: ~/src/.worktrees
+deployRepo: k8s-ansible-core
+bitbucket: { project: SF, repo: proxy }
+bamboo: { plan: BUILDS-PROXY, deploymentProject: 565608453 }

@@ -1,0 +1,17 @@
+id: code.publish
+title: Коммит, пуш и PR
+hint: "Одно подтверждение на все: сообщение и состав коммита, пуш, PR и перевод задачи по доске на ревью (веха review)"
+phase: code
+kind: hybrid
+requires: [issue, worktree, branch]
+provides: [commitSha, pr, status]
+gate: publish
+sideEffects: true
+params:
+  moveTo:
+    type: jiraStatus
+    label: Куда перевести задачу
+    milestone: review
+agent:
+  model: sonnet
+  maxBudgetUsd: 2

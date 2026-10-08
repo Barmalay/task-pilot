@@ -1,0 +1,6 @@
+id: artifacts
+title: Артефакты
+hint: Досдать скриншоты и итоги проверки
+steps:
+  - qa.stand
+  - qa.publish

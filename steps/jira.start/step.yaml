@@ -1,0 +1,14 @@
+id: jira.start
+title: В работу
+hint: "Назначает задачу на вас и переводит по доске в работу (веха inProgress)"
+phase: task
+kind: code
+requires: [issue]
+provides: [status]
+gate: before
+sideEffects: true
+params:
+  moveTo:
+    type: jiraStatus
+    label: Куда перевести задачу
+    milestone: inProgress

@@ -1,0 +1,11 @@
+id: pilot.retro
+title: Разбор прогона
+hint: "Агент разбирает замечания владельца на подтверждениях, ответы на вопросы и сбои прогона и предлагает правки промптов шагов и скиллов; правки записываются после показа диффа и проверки тестами, коммит по команде владельца"
+phase: meta
+kind: hybrid
+provides: [improvements]
+gate: before
+sideEffects: true
+agent:
+  model: opus
+  maxBudgetUsd: 5

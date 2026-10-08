@@ -1,0 +1,8 @@
+# Jira компании: адрес и id полей, общие для досок всех ее команд. Доску команды (путь, вехи, фильтры) описывает
+# profiles/jira.yaml ее пакета, его ключи ложатся поверх этих.
+baseUrl: https://jira.example.com
+# MCP-сервер Jira и Confluence (mcp-atlassian) в ~/.claude.json.
+mcp: atlassian
+# Поле спринта (gh-sprint) и поле эпика (Epic Link) задач jira.example.com.
+sprintField: customfield_10330
+epicField: customfield_10933

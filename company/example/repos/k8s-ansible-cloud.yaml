@@ -1,0 +1,17 @@
+# Конфиг деплоя сервисов контура cloud (DEVOPS/k8s-ansible на git.cloud.example.com). Ветку задачи шаг "Конфиг
+# деплоя" заводит сам, с именем ветки задачи в репозитории сервиса: такую ветку скрипт деплоя берет сам. Заметки ниже
+# получает агент, который пишет правку конфига.
+id: k8s-ansible-cloud
+title: k8s-ansible (cloud)
+contour: cloud
+match:
+  labels: [repo:DEVOPS/k8s-ansible]
+path: ~/src/k8s-ansible-cloud
+worktreesDir: ~/src/.worktrees
+bitbucket:
+  project: DEVOPS
+  repo: k8s-ansible
+notes:
+  - "Настройки сервиса лежат в group_vars/<сервис>/: базовый файл (имя сервиса через подчеркивания, например my_service) задает значения для всех окружений, файлы окружений (_stable_cloud, _testing, _testing_cloud_load, _production_cloud) их переопределяют."
+  - "Переменную окружения сервиса с переменной ansible связывает шаблон templates/<сервис>/*-secrets.yml.j2 строкой вида ИМЯ: \"{{ переменная }}\"."
+  - "Секреты лежат во внешнем хранилище секретов: в файлах окружений их перечисляет secrets_key ссылками вида {{ secret_... }}."

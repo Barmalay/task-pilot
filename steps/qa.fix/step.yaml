@@ -1,0 +1,18 @@
+id: qa.fix
+title: Доработка по тесту
+hint: "Если AC на стенде не прошли: агент чинит код по отчету, скриншотам и логам, а прогон заново проходит проверку, коммит, сборку, деплой и тест этих AC; не больше трех кругов"
+phase: qa
+kind: agent
+requires: [issue, qaReport, worktree]
+provides: [qaFix]
+gate: none
+sideEffects: true
+refresh: [artifacts]
+agent:
+  model: opus
+  maxBudgetUsd: 15
+  browser: true
+loop:
+  restart: [code.verify, code.publish, ci.wait, deploy.stand, qa.stand]
+  max: 3
+  title: по тесту

@@ -1,0 +1,5 @@
+id: monitor
+title: Дашборд задачи
+hint: Дашборд мониторинга прода по коду, плану и AC задачи
+steps:
+  - monitor.dashboard

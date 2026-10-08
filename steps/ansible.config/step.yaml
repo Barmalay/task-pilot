@@ -1,0 +1,12 @@
+id: ansible.config
+title: Конфиг деплоя
+hint: "Заводит ветку k8s-ansible с именем ветки задачи; правку конфига всех окружений пишет агент или дает патч из доков задачи; одно подтверждение на коммит, пуш и PR"
+phase: deploy
+kind: hybrid
+requires: [issue]
+provides: [ansibleBranch, ansiblePr]
+gate: publish
+sideEffects: true
+agent:
+  model: sonnet
+  maxBudgetUsd: 2

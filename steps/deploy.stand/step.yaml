@@ -1,0 +1,10 @@
+id: deploy.stand
+title: Деплой на стенд
+hint: "Релиз из сборки ветки, деплой на выбранный стенд и проверка выкатки по образу в Kibana; ветку k8s-ansible с другим именем задает Customize Deploy"
+phase: deploy
+kind: code
+requires: [build]
+provides: [release, deployedBuild]
+gate: publish
+sideEffects: true
+refresh: [stands]

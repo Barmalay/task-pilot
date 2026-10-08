@@ -1,0 +1,10 @@
+# Пакет команды для тестов Task Pilot: сервисы в контурах учебного слоя компании example, свои стенды и доска.
+id: fixture
+title: Команда тестов
+company: example
+qa:
+  skill: stand-qa
+  logs: { source: kibana-cloud, container: gate }
+wiki:
+  skill: wiki-pages
+  space: TEAM

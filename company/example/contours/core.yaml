@@ -1,0 +1,57 @@
+id: core
+title: core
+git: https://git.example.com
+bamboo: https://bamboo.example.com
+mcp:
+  # MCP-сервера для git.example.com в ~/.claude.json нет: Task Pilot запускает его сам с токеном с экрана "Интеграции",
+  # тот же токен git получает заголовком для fetch и push по https.
+  bitbucket: bitbucket-core
+  bamboo: bamboo
+connected: true
+# Имена прода сверх слова prod, которое запрещено всегда: резерв и staging перед продом.
+prodLike: reserve|staging
+# Стенд по умолчанию для прогонов: Stable.
+defaultStand: ^stable
+# Теги образов и релизы Bamboo: сборка ветки плана 1.0.<сборка>-<номер ветки плана>, сборка самого плана
+# 1.0.<сборка>-master, релиз основной ветки release-<номер>.
+builds:
+  branchTag: 1.0.{build}-{branch}
+  masterTag: 1.0.{build}-master
+  masterRelease: ^release-\d+$
+# Сервисы контура отвечают с заголовком среды, равным namespace стенда: так видно, что ответил сервис этого стенда.
+serviceHeader: x-environment
+# Деплой контура ветку k8s-ansible задачи сам не берет, даже названную как ветка релиза: ее задает только форма
+# Customize Deploy, и Deploy в ней нажимает владелец. Без своей ветки у задачи деплой идет из master обычным путем.
+deploy:
+  ansibleBranch: customize
+  customizeUrl: https://bamboo.example.com/plugins/deploy/customDeploymentVersion.action
+# Стенды контура: Stable и тестовые окружения Testing-* проектов деплоя его сервисов. Список окружений и их id
+# Task Pilot читает из bamboo.example.com сам, при запуске и раз в час; у каждого сервиса на стенде свое окружение, и
+# сервис без окружения на стенд не деплоится. Namespace - имя окружения в нижнем регистре, логи - в тестовой Kibana.
+stands:
+  include: ^(Stable|Testing-.+)$
+  idPrefix: core-
+  logs: kibana-core
+  notes:
+    Stable:
+      - Общий стенд, сюда же ставят ветки других задач
+  # Адрес сервиса на стенде: {service} - репозиторий, {host} - namespace стенда, где testing- заменено на team-
+  # (Stable - mobile-stable.test.example.com, Testing-A-0 - mobile-team-a-0.test.example.com). Сервис отвечает с
+  # заголовком X-Environment, равным namespace; адрес сервиса на тестовом стенде, где его нет, отвечает со Stable.
+  serviceUrl: https://{service}-{host}.test.example.com
+  host: { from: ^testing-, to: team- }
+# Production, Reserve и Staging четырех сервисов контура (mobile, api, adapter, proxy): токен технически разрешает
+# туда деплой, инструмент - никогда.
+forbiddenBambooEnvIds:
+  - 531631202
+  - 531631203
+  - 531631204
+  - 620726234
+  - 620726235
+  - 620726236
+  - 649986389
+  - 649986390
+  - 649986391
+  - 565674233
+  - 565674234
+  - 565674235

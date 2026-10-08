@@ -1,0 +1,19 @@
+{
+  "name": "@task-pilot/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node src/dev.ts",
+    "start": "node src/main.ts",
+    "demo": "node src/demo.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "@task-pilot/api-types": "workspace:*",
+    "@task-pilot/step-kit": "workspace:*",
+    "fastify": "5.12.5",
+    "yaml": "2.9.1",
+    "zod": "4.6.5"
+  }
+}

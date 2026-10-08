@@ -1,0 +1,17 @@
+# Источники логов стендов: на них ссылается поле logs профиля стенда.
+# Тестовая Kibana отвечает без авторизации, запросы идут через console proxy.
+kibana-cloud:
+  kind: kibana
+  url: https://kibana.test.example.com
+  index: cloud-k8s-*
+  dataView: 00000000-0000-4000-8000-000000000001
+# Сервисы контура core на стендах: индекс core-k8s-*, образ пода в kubernetes.container.image.
+kibana-core:
+  kind: kibana
+  url: https://kibana.test.example.com
+  index: core-k8s-*
+  imageField: kubernetes.container.image.keyword
+  # Текст записи в messagetext, логгер в logger.
+  messageField: messagetext
+  loggerField: logger
+  dataView: 00000000-0000-4000-8000-000000000002

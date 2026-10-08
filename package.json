@@ -1,0 +1,33 @@
+{
+  "name": "task-pilot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": ">=26"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter @task-pilot/server --filter @task-pilot/web run dev",
+    "demo": "pnpm --parallel --filter @task-pilot/server --filter @task-pilot/web run demo",
+    "demo:script": "TASK_PILOT_DEMO_AGENT=script pnpm demo",
+    "start": "node apps/server/src/launcher.ts start",
+    "stop": "node apps/server/src/launcher.ts stop",
+    "restart": "node apps/server/src/launcher.ts restart",
+    "app": "sh launcher/install.sh",
+    "test": "vitest run",
+    "typecheck": "tsc -p packages/step-kit && tsc -p packages/api-types && tsc -p apps/server && tsc -p steps && tsc -p apps/web",
+    "build:web": "pnpm --filter @task-pilot/web run build",
+    "check": "pnpm typecheck && pnpm test && pnpm build:web",
+    "checkup": "node apps/server/src/doctor-cli.ts",
+    "smoke": "node apps/server/src/smoke.ts",
+    "reference": "node apps/server/src/reference.ts",
+    "features:import": "node apps/server/src/features-import.ts",
+    "prepare": "git config core.hooksPath .githooks || true"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.2",
+    "typescript": "7.0.2",
+    "vitest": "5.0.1"
+  }
+}

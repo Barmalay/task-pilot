@@ -1,0 +1,16 @@
+id: linked
+title: Связанный репозиторий
+hint: Второй репозиторий задачи - код, PR, сборка и деплой; тест на стенде идет в основном прогоне, когда выкачены все
+steps:
+  - git.prepare
+  - task.analyze
+  - code.implement
+  - code.verify
+  - code.publish
+  - ci.wait
+  - ansible.config
+  - deploy.stand
+  - pr.address-review
+  - task.finish
+off:
+  - ansible.config

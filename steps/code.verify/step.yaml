@@ -1,0 +1,18 @@
+id: code.verify
+title: Проверка
+hint: "Сборка и тесты под JDK 21 с разбором surefire, затем ревью изменений; найденное агент исправляет сам"
+phase: code
+kind: hybrid
+requires: [worktree]
+provides: [testReport, findings]
+gate: none
+sideEffects: true
+params:
+  attempts:
+    type: select
+    label: Сколько раз агент чинит сборку
+    options: ['1', '2', '3', '5']
+    default: '3'
+agent:
+  model: opus
+  maxBudgetUsd: 10

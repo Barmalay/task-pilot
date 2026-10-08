@@ -1,0 +1,18 @@
+id: task.rework
+title: Доработка задачи
+hint: "Задачу вернули или изменили в Jira: агент показывает, что поменялось в постановке, и обновляет план на утверждение, после чего цикл проходит заново"
+phase: task
+kind: agent
+requires: [issue]
+provides: [plan, issue, ac, status, issueChanged, issueSeen]
+gate: before
+sideEffects: true
+agent:
+  model: opus
+  maxBudgetUsd: 8
+loop:
+  restart: [git.prepare, code.implement, code.verify, code.publish, ci.wait, deploy.stand, qa.stand, qa.fix, qa.publish, pr.address-review, task.finish]
+  max: 5
+  title: по задаче
+# Изменения задачи в Jira показывает плашка на прогоне, доработку запускает владелец кнопкой "Доработать".
+trigger: { event: issue.changed, auto: false }

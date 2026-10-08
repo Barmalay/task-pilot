@@ -1,0 +1,8 @@
+id: load
+title: load
+contour: cloud
+namespace: testing-cloud-load
+bambooEnv: Testing-Cloud-load
+bambooEnvId: 24674577
+logs: kibana-cloud
+deployable: false

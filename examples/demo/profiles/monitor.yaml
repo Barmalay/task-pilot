@@ -1,0 +1,43 @@
+# Панель мониторинга учебной команды. Логи прода в демо подменные (apps/server/src/demo/logs.ts): источник никуда не
+# ходит, строки каждого отбора сочиняются устойчиво. Сервисы связаны идентификаторами одной операции: у калькулятора
+# в строках state и correlationId, у шлюза - correlationId, у аудита - поле flowState.
+source:
+  id: demo-prod
+  mcp: demo-elasticsearch
+# Дни и часы воронок фич (features/ пакета) считаются по этому поясу.
+timeZone: Europe/Moscow
+services:
+  - id: calculator
+    title: Калькулятор
+    index: demo-*
+    container: demo-calculator
+    fields:
+      message: message
+      level: level
+      logger: logger.keyword
+      version: version.keyword
+      pod: pod.keyword
+      trace: traceId.keyword
+  - id: gateway
+    title: API-шлюз
+    index: demo-*
+    container: demo-gateway
+    fields:
+      message: message
+      level: level
+      logger: logger.keyword
+      version: version.keyword
+      pod: pod.keyword
+  - id: audit
+    title: Аудит
+    index: demo-*
+    container: demo-audit
+    fields:
+      message: message
+      level: level
+      logger: logger.keyword
+      version: version.keyword
+      pod: pod.keyword
+    ids: [flowState.keyword]
+# Задачи учебной команды на мониторинге: подменная Jira отдает на любой запрос обе учебные задачи.
+tasksJql: project = DEMO AND status = Done ORDER BY updated DESC

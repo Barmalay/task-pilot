@@ -1,0 +1,8 @@
+id: new-step
+title: Новый шаг
+hint: "Мастер: Claude пишет шаг Task Pilot по описанию, Task Pilot проверяет его тестами, шаг попадает в каталог после подтверждения"
+steps:
+  - pilot.new-step
+# Задачи Jira у прогона мастера нет: в нем с самого начала лежит описание шага.
+inputs:
+  - stepRequest
